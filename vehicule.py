@@ -1,7 +1,7 @@
 
 class Vehicle:
 
-    def __init__(self, length, weight, react_time):
+    def __init__(self, weight, react_time,length=1):
         """
         Initiates the Vehicle class
 
