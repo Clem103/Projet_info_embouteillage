@@ -13,6 +13,8 @@ class Ecosystem(list):
         if self.nbvehic>=self.maxlength*self.maxwidth:
             raise (ValueError("Too many vehicles"))
 
+        self.coord = self.placementinitial()
+
     def __str__(self):
         return self.str2()
 
@@ -70,13 +72,13 @@ class Ecosystem(list):
         :return:
         """
         r=""
-        coord=Ecosystem.placementinitial(self)
+        #coord=Ecosystem.placementinitial(self)
 
         for i in range (self.maxwidth):
             for j in range (self.maxlength):
-                if coord[i][j]==0:
+                if self.coord[i][j]==0:
                     r+="_CAR_"
-                elif coord[i][j]==2:
+                elif self.coord[i][j]==2:
                     r+="TRUCK"
                 else:
                     r+="_____"
