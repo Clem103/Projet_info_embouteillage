@@ -1,56 +1,22 @@
 class Vehicle:
 
-    def __init__(self, weight, react_time,length=1):
+    def __init__(self, length=1):
         """
         Initiates the Vehicle class
 
         Parameters
         ----------
         length : length of the vehicle
-        weight : weight of the vehicle
-        react_time :  reaction time of the driver
         """
 
         self.length = length
-        self.weight = weight
-        self.react_time = react_time
+        # self.weight =
+        # self.react_time =
+        # self.speed =
+        # self.max_speed=
+        # self.smoothness=
 
-    def forward(self):
-        """
-        Makes the vehicle go forward depending on its speed
-        Returns
-        -------
-        Nothing
-        """
-
-        pass
-
-    def brake(self, amount):
-        """
-        Reduces the speed of the vehicle depending on the amount
-
-        Parameters
-        ----------
-        amount
-
-        Returns
-        -------
-
-        """
-        pass
-
-    def throttle(self, amount):
-        """
-        Increases the speed of the vehicle depending on the amount
-
-        Parameters
-        ----------
-        amount
-
-        Returns
-        -------
-
-        """
+    def update_speed(self):
         pass
 
     def change_lane(self, dest_lane):
@@ -69,11 +35,11 @@ class Vehicle:
 
 class Car(Vehicle):
 
-    def __init__(self, length, weight, react_time):
-        super().__init__(length, weight, react_time)
+    def __init__(self, length):
+        super().__init__(length)
 
 
 class Truck(Vehicle):
 
-    def __init__(self, length, weight, react_time):
-        super().__init__(length, weight, react_time)
+    def __init__(self, length):
+        super().__init__(length)

@@ -1,8 +1,48 @@
 import numpy as np
 from random import randint
+from vehicle import Vehicle
 
 
-class Road:
+class Road(np.ndarray):
+    def __new__(cls, length: int, width: int, vehicles: list):
+        """
+        :param length: Length of the road (equal to the maximum number of vehicle that can fit)
+        :param width: Number of lane
+        :param vehicles: Array (list) of Vehicle that need to be placed into the road
+
+        Creates the Road object and overrides the ndarray constructor to add instance variables specific to our project
+        """
+
+        obj = super(Road, cls).__new__(cls, (width, length), dtype=Vehicle)
+        obj.fill(0)
+
+        obj.nbvehic = len(vehicles)
+        obj.length = length
+        obj.width = width
+        obj.vehicles = vehicles
+
+        return obj
+
+    def __array_finalize__(self, obj):
+        """
+        :param obj: Object being manipulated
+        :return: Nothing
+
+        Called when a new array is created (e.g. when ndarry.__new__ is called).
+        When it is called via an explicit constructor obj is None.
+        When it is called via a method which involves the creation of a new array, the __new__ method defined above
+        isn't necessarily called. Therefore, this methods purpose is to make sure the instance variables are passed
+        over the object transformation
+        """
+        if obj is None:
+            return
+
+        self.nbvehic = getattr(obj, 'nbvehic', None)
+        self.length = getattr(obj, 'length', None)  # NB: These variables don't reflect the correct shape of the array
+        self.width = getattr(obj, 'width', None)    # when doing splicing (because they don't get updated anywhere)
+        self.vehicles = getattr(obj, 'vehicles', None)
+
+    # noinspection PyMissingConstructor
     def __init__(self, length: int, width: int, vehicles: list) -> None:
         """
         :param length: Length of the road (equal to the maximum number of vehicle that can fit)
@@ -13,10 +53,6 @@ class Road:
 
         Initiates a road that is *length* long and with *width* lane by placing the given vehicles on the road.
         """
-        self.nbvehic = len(vehicles)
-        self.length = length
-        self.width = width
-        self.vehicles = vehicles
 
         if self.width <= 0 or self.length <= 0:
             raise ValueError("Road dimensions are not correct")
@@ -24,16 +60,15 @@ class Road:
         if self.nbvehic >= self.length*self.width:
             raise (ValueError("Too many vehicles"))
 
-        self.road = np.zeros((width, length))
         self.place_vehicles()
 
     def __str__(self):
         r = ""
         for x in range(self.width):
             for y in range(self.length):
-                if self.road[x, y] == 1:
+                if self[x, y] == 1:
                     r += "C"
-                elif self.road[x, y] == 2:
+                elif self[x, y] == 2:
                     r += "T"
                 else:
                     r += "_"
@@ -45,10 +80,10 @@ class Road:
         for veh in self.vehicles:
             x = randint(0, self.width-1)
             y = randint(0, self.length-1)
-            while self.road[x, y] != 0:
+            while self[x, y] != 0:
                 x = randint(0, self.width - 1)
                 y = randint(0, self.length - 1)
-            self.road[x, y] = veh
+            self[x, y] = veh
             print("Placing vehicle of type {0} at coord {1}".format(veh, (x,y)))
             print(self)
 
@@ -88,4 +123,5 @@ class Road:
 
 
 if __name__ == "__main__":
-    a = Road(10, 1, [1, 1, 1, 1, 2, 1])
+    veh_arr = [Vehicle(1) for i in range(0,7)]
+    a = Road(10, 1, veh_arr)
