@@ -1,5 +1,3 @@
-import ecosysteme as eco
-
 class Vehicle:
 
     def __init__(self, weight, react_time,length=1):
