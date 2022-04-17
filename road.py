@@ -4,11 +4,11 @@ from vehicle import Vehicle
 
 
 class Road(np.ndarray):
-    def __new__(cls, length: int, width: int, vehicles: list):
+    def __new__(cls, length: int, width: int, nb_vehicle: int):
         """
         :param length: Length of the road (equal to the maximum number of vehicle that can fit)
         :param width: Number of lane
-        :param vehicles: Array (list) of Vehicle that need to be placed into the road
+        :param nb_vehicle: Number of Vehicle that need to be placed into the road
 
         Creates the Road object and overrides the ndarray constructor to add instance variables specific to our project
         """
@@ -16,10 +16,10 @@ class Road(np.ndarray):
         obj = super(Road, cls).__new__(cls, (width, length), dtype=Vehicle)
         obj.fill(0)
 
-        obj.nbvehic = len(vehicles)
+        obj.nbvehic = nb_vehicle
         obj.length = length
         obj.width = width
-        obj.vehicles = vehicles
+        obj.vehicles = []
 
         return obj
 
@@ -43,11 +43,11 @@ class Road(np.ndarray):
         self.vehicles = getattr(obj, 'vehicles', None)
 
     # noinspection PyMissingConstructor
-    def __init__(self, length: int, width: int, vehicles: list) -> None:
+    def __init__(self, length: int, width: int, nb_vehicle: int) -> None:
         """
         :param length: Length of the road (equal to the maximum number of vehicle that can fit)
         :param width: Number of lane
-        :param vehicles: Array (list) of Vehicle that need to be placed into the road
+        :param nb_vehicle: Number of Vehicle that need to be placed into the road
         :raise ValueError: If the number of vehicles exceeds the available space or if the width or the length of the
             road is inferior or equal to 0
 
@@ -60,23 +60,34 @@ class Road(np.ndarray):
         if self.nbvehic >= self.length*self.width:
             raise (ValueError("Too many vehicles"))
 
-        self.place_vehicles()
+        self.place_vehicles_1d()
 
     def __str__(self):
         r = ""
         for x in range(self.width):
             for y in range(self.length):
-                if self[x, y] == 1:
-                    r += "C"
-                elif self[x, y] == 2:
-                    r += "T"
+                if self[x, y] != 0:
+                    if self[x, y].type == 1:
+                        r += "C"
+                    elif self[x, y].type == 2:
+                        r += "T"
                 else:
                     r += "_"
             r += "\n"
 
         return r
 
-    def place_vehicles(self):
+    def place_vehicles_1d(self):
+        target_gap = self.length // self.nbvehic - 1
+
+        y = 0
+        for i in range(self.nbvehic):
+            self[0, y] = Vehicle(0, y)
+            self.vehicles.append(self[0, y])
+            y += target_gap + 1
+        print(self)
+
+    def place_vehicles_randomly(self):
         for veh in self.vehicles:
             x = randint(0, self.width-1)
             y = randint(0, self.length-1)
@@ -106,22 +117,5 @@ class Road(np.ndarray):
         #             coordinit[j][k+2]=2
 
 
-    def turn(self):
-        """
-        creates a turn in which our vehicles will move
-        :return:
-        """
-        pass
-
-
-    def simlulate(self):
-        """
-        simulation of a turn
-        :return:
-        """
-        pass
-
-
 if __name__ == "__main__":
-    veh_arr = [Vehicle(1) for i in range(0,7)]
-    a = Road(10, 1, veh_arr)
+    a = Road(1000, 1, 50)  # Kept at 1 lane for the moment and 1000 cell long (scale for 4km simulation)
