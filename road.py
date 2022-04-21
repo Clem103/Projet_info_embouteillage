@@ -82,9 +82,10 @@ class Road(np.ndarray):
 
         y = 0
         for i in range(self.nbvehic):
-            self[0, y] = Vehicle(0, y)
+            self[0, y] = Vehicle(0, y, self)
             self.vehicles.append(self[0, y])
             y += target_gap + 1
+            print("Placing vehicle at coord {0}".format((0, y)))
         print(self)
 
     def place_vehicles_randomly(self):
@@ -95,7 +96,7 @@ class Road(np.ndarray):
                 x = randint(0, self.width - 1)
                 y = randint(0, self.length - 1)
             self[x, y] = veh
-            print("Placing vehicle of type {0} at coord {1}".format(veh, (x,y)))
+            print("Placing vehicle of type {0} at coord {1}".format(veh, (x, y)))
             print(self)
 
     # soucis avec les randint: il peut sortir une paire de coordonnées égales, on aura dans ce cas 1 voiture en moins.
@@ -115,6 +116,13 @@ class Road(np.ndarray):
         #         if coordinit[j][k+1]==2 and coordinit[j][k]==0:
         #             coordinit[j][k+1]=1
         #             coordinit[j][k+2]=2
+
+    def update_pos(self):
+        self.fill(0)
+
+        for veh in self.vehicles:
+            y = veh.y % self.length
+            self[0, y] = veh
 
 
 if __name__ == "__main__":
