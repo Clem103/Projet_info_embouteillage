@@ -5,12 +5,13 @@ from road import Road
 
 def step(road: Road, time_increment: float) -> None:
     """
-    :param road: Road object where the vehicles are stored
-    :param time_increment: Time increment (dt) for the simulation. \nFor the current model, anything below 0.5s leads
-    to a static solution (no traffic jam)
-    :return: Nothing
-
     Plays one step of the simulation with the given road and time increment.
+
+    :param road: Road object where the vehicles are stored
+    :param time_increment: Time increment (dt) for the simulation. For the current model, anything below 0.5s leads to a static solution (no traffic jam)
+    :return: Nothing
+    :author: Clément Vellu
+
     """
     vehicles = road.vehicles
     for index in range(len(vehicles) - 1):

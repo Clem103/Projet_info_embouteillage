@@ -6,12 +6,13 @@ class Vehicle:
 
     def __init__(self, x: int, y: int, road: 'Road', length: int = 1) -> None:
         """
+        Initiates the Vehicle class on the given road at given coordinates.
+
         :param x: Vertical position of the vehicle
         :param y: Horizontal position of the vehicle
         :param road: Road object where the vehicle is located
         :param length: Length of the vehicle
-
-        Initiates the Vehicle class on the given road at given coordinates.
+        :author: Clément Vellu
         """
 
         self.road = road
@@ -30,11 +31,12 @@ class Vehicle:
 
     def update_speed(self, leader: Vehicle, dt: float) -> None:
         """
+        Updates the speed of the vehicle using the ballistic method.
+
         :param leader: Vehicle that is ahead.
         :param dt: Time increment used in simulation
         :return: Nothing
-
-        Updates the speed of the vehicle using the ballistic method.
+        :author: Clément Vellu
         """
         dv = self.calculate_accel(leader)
         new_speed = self.speed + dv * dt
@@ -46,11 +48,12 @@ class Vehicle:
 
     def calculate_accel(self, leader: Vehicle) -> float:
         """
+        Calculates the acceleration of the vehicle using the Intelligent Driver Model (IDM).
+        Called by Vehicle.update_speed.
+
         :param leader: Vehicle that is ahead
         :return: new_accel: Calculated acceleration
-
-        Calculates the acceleration of the vehicle using the Intelligent Driver Model (IDM). \n
-        Called by Vehicle.update_speed.
+        :author: Clément Vellu
         """
         s0 = self.min_gap
         s = self.get_gap(leader)
@@ -69,10 +72,11 @@ class Vehicle:
 
     def get_gap(self, leader):
         """
+        Calculates the gap between two vehicles assuming the given vehicle is ahead and return the absolute value of it.
+
         :param leader: Other vehicle
         :return: gap - The value of the gap between the vehicle 1 and the vehicle 2
-
-        Calculates the gap between two vehicles assuming the given vehicle is ahead and return the absolute value of it.
+        :author: Mipam Quici
         """
         # Only 1D for now
 
@@ -88,11 +92,11 @@ class Vehicle:
 
     def change_lane(self, dest_lane):
         """
+        NOT YET IMPLEMENTED - Changes the lane of the vehicle to the dest_lane.
+
         :param dest_lane: Lane that the driver wants to reach
         :return: Nothing
-        :author: TEST
-
-        NOT YET IMPLEMENTED - Changes the lane of the vehicle to the dest_lane.
+        :author: None yet
         """
         pass
 

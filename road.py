@@ -4,13 +4,15 @@ from vehicle import Vehicle
 
 
 class Road(np.ndarray):
+
     def __new__(cls, length: int, width: int, nb_vehicle: int):
         """
+        Creates the Road object and overrides the ndarray constructor to add instance variables specific to our project.
+
         :param length: Length of the road (equal to the maximum number of vehicle that can fit)
         :param width: Number of lane
         :param nb_vehicle: Number of Vehicle that need to be placed into the road
-
-        Creates the Road object and overrides the ndarray constructor to add instance variables specific to our project.
+        :author: Clément Vellu
         """
 
         obj = super(Road, cls).__new__(cls, (width, length), dtype=Vehicle)
@@ -25,14 +27,16 @@ class Road(np.ndarray):
 
     def __array_finalize__(self, obj: np.ndarray) -> None:
         """
-        :param obj: Object being manipulated
-        :return: Nothing
-
         Called when a new array is created (e.g. when ndarray.__new__ is called). \n
-        When it is called via an explicit constructor obj is None. \n
+        When it is called via an explicit constructor obj is None.
+
         When it is called via a method which involves the creation of a new array, the __new__ method defined above
         isn't necessarily called. Therefore, this method's purpose is to make sure the instance variables are passed
         over the object transformation.
+
+        :param obj: Object being manipulated
+        :return: Nothing
+        :author: Clément Vellu
         """
         if obj is None:
             return
@@ -45,13 +49,14 @@ class Road(np.ndarray):
     # noinspection PyMissingConstructor
     def __init__(self, length: int, width: int, nb_vehicle: int) -> None:
         """
+        Initiates a road that is *length* long and with *width* lane by placing the given vehicles on the road.
+
         :param length: Length of the road (equal to the maximum number of vehicle that can fit)
         :param width: Number of lane
         :param nb_vehicle: Number of Vehicle that need to be placed into the road
         :raise ValueError: If the number of vehicles exceeds the available space or if the width or the length of the
             road is inferior or equal to 0
-
-        Initiates a road that is *length* long and with *width* lane by placing the given vehicles on the road.
+        :author: Mipam Quici
         """
 
         if self.width <= 0 or self.length <= 0:
@@ -64,9 +69,10 @@ class Road(np.ndarray):
 
     def __str__(self) -> str:
         """
-        :return r: String that will be displayed when called
-
         Displays the road.
+
+        :return r: String that will be displayed when called
+        :author: Mipam Quici
         """
         r = ""
         for x in range(self.width):
@@ -84,10 +90,11 @@ class Road(np.ndarray):
 
     def place_vehicles_1d(self):
         """
-        :return: Nothing
-
         Called upon initialization of the simulation to instantiate the vehicles and to place them as spread as possible
         using the simulation parameters (length of the road and number of vehicles).
+
+        :return: Nothing
+        :author: Clément Vellu
         """
         target_gap = self.length // self.nbvehic - 1
 
@@ -101,9 +108,10 @@ class Road(np.ndarray):
 
     def place_vehicles_randomly(self):
         """
-        :return: Nothing
-
         Shuffles the location of vehicles.
+
+        :return: Nothing
+        :author: Mipam Quici
         """
         self.fill(0)
         print("Shuffling vehicles location")
@@ -120,11 +128,12 @@ class Road(np.ndarray):
 
     def update_pos(self):
         """
-        :return: Nothing
-
         Updates the position of the vehicles on the road and brings the vehicles that reach the end of the road to
         the beginning of it. \n
         Usually called for each step of the simulation.
+
+        :return: Nothing
+        :author: Clément Vellu
         """
 
         self.fill(0)
