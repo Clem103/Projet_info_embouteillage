@@ -10,7 +10,7 @@ class Road(np.ndarray):
         :param width: Number of lane
         :param nb_vehicle: Number of Vehicle that need to be placed into the road
 
-        Creates the Road object and overrides the ndarray constructor to add instance variables specific to our project
+        Creates the Road object and overrides the ndarray constructor to add instance variables specific to our project.
         """
 
         obj = super(Road, cls).__new__(cls, (width, length), dtype=Vehicle)
@@ -23,16 +23,16 @@ class Road(np.ndarray):
 
         return obj
 
-    def __array_finalize__(self, obj):
+    def __array_finalize__(self, obj: np.ndarray) -> None:
         """
         :param obj: Object being manipulated
         :return: Nothing
 
-        Called when a new array is created (e.g. when ndarry.__new__ is called).
-        When it is called via an explicit constructor obj is None.
+        Called when a new array is created (e.g. when ndarray.__new__ is called). \n
+        When it is called via an explicit constructor obj is None. \n
         When it is called via a method which involves the creation of a new array, the __new__ method defined above
-        isn't necessarily called. Therefore, this methods purpose is to make sure the instance variables are passed
-        over the object transformation
+        isn't necessarily called. Therefore, this method's purpose is to make sure the instance variables are passed
+        over the object transformation.
         """
         if obj is None:
             return
@@ -62,7 +62,12 @@ class Road(np.ndarray):
 
         self.place_vehicles_1d()
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        :return r: String that will be displayed when called
+
+        Displays the road.
+        """
         r = ""
         for x in range(self.width):
             for y in range(self.length):
@@ -78,6 +83,12 @@ class Road(np.ndarray):
         return r
 
     def place_vehicles_1d(self):
+        """
+        :return: Nothing
+
+        Called upon initialization of the simulation to instantiate the vehicles and to place them as spread as possible
+        using the simulation parameters (length of the road and number of vehicles).
+        """
         target_gap = self.length // self.nbvehic - 1
 
         y = 0
@@ -89,35 +100,33 @@ class Road(np.ndarray):
         print(self)
 
     def place_vehicles_randomly(self):
+        """
+        :return: Nothing
+
+        Shuffles the location of vehicles.
+        """
+        self.fill(0)
+        print("Shuffling vehicles location")
         for veh in self.vehicles:
-            x = randint(0, self.width-1)
-            y = randint(0, self.length-1)
+            x = randint(0, self.width - 1)
+            y = randint(0, self.length - 1)
             while self[x, y] != 0:
                 x = randint(0, self.width - 1)
                 y = randint(0, self.length - 1)
             self[x, y] = veh
-            print("Placing vehicle of type {0} at coord {1}".format(veh, (x, y)))
+            veh.x = x
+            veh.y = y
             print(self)
 
-    # soucis avec les randint: il peut sortir une paire de coordonnées égales, on aura dans ce cas 1 voiture en moins.
-
-        # for j in range(self.width):
-        #     for k in range(self.length-2):
-        #         #permet de vérifier l'espacement entre deux véhicule au début de la simulation
-        #         if coordinit[j][k+1]==0 and coordinit[j][k]==0:
-        #             coordinit[j][k+1]=1
-        #             coordinit[j][k+2]=0
-        #         if coordinit[j][k+1]==2 and coordinit[j][k]==2:
-        #             coordinit[j][k+1]=1
-        #             coordinit[j][k+2]=2
-        #         if coordinit[j][k+1]==0 and coordinit[j][k]==2:
-        #             coordinit[j][k+1]=1
-        #             coordinit[j][k+2]=0
-        #         if coordinit[j][k+1]==2 and coordinit[j][k]==0:
-        #             coordinit[j][k+1]=1
-        #             coordinit[j][k+2]=2
-
     def update_pos(self):
+        """
+        :return: Nothing
+
+        Updates the position of the vehicles on the road and brings the vehicles that reach the end of the road to
+        the beginning of it. \n
+        Usually called for each step of the simulation.
+        """
+
         self.fill(0)
 
         for veh in self.vehicles:
@@ -126,4 +135,5 @@ class Road(np.ndarray):
 
 
 if __name__ == "__main__":
+    # For testing purpose
     a = Road(1000, 1, 50)  # Kept at 1 lane for the moment and 1000 cell long (scale for 4km simulation)

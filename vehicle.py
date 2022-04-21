@@ -1,16 +1,17 @@
+from __future__ import annotations
 import numpy as np
 
 
 class Vehicle:
 
-    def __init__(self, x, y, road, length=1):
+    def __init__(self, x: int, y: int, road: 'Road', length: int = 1) -> None:
         """
         :param x: Vertical position of the vehicle
         :param y: Horizontal position of the vehicle
         :param road: Road object where the vehicle is located
         :param length: Length of the vehicle
 
-        Initiates the Vehicle class
+        Initiates the Vehicle class on the given road at given coordinates.
         """
 
         self.road = road
@@ -27,7 +28,14 @@ class Vehicle:
         self.y = y              # Horizontal position from 0 to length - 1
         self.type = 1           # Type of vehicle
 
-    def update_speed(self, leader, dt):
+    def update_speed(self, leader: Vehicle, dt: float) -> None:
+        """
+        :param leader: Vehicle that is ahead.
+        :param dt: Time increment used in simulation
+        :return: Nothing
+
+        Updates the speed of the vehicle using the ballistic method.
+        """
         dv = self.calculate_accel(leader)
         new_speed = self.speed + dv * dt
         if new_speed <= 0:
@@ -36,7 +44,14 @@ class Vehicle:
         self.speed = new_speed
         self.y = new_y
 
-    def calculate_accel(self, leader):
+    def calculate_accel(self, leader: Vehicle) -> float:
+        """
+        :param leader: Vehicle that is ahead
+        :return: new_accel: Calculated acceleration
+
+        Calculates the acceleration of the vehicle using the Intelligent Driver Model (IDM). \n
+        Called by Vehicle.update_speed.
+        """
         s0 = self.min_gap
         s = self.get_gap(leader)
         v = self.speed
@@ -57,7 +72,7 @@ class Vehicle:
         :param leader: Other vehicle
         :return: gap - The value of the gap between the vehicle 1 and the vehicle 2
 
-        Calculates the gap between two vehicles assuming the given vehicle is ahead and return the absolute value of it
+        Calculates the gap between two vehicles assuming the given vehicle is ahead and return the absolute value of it.
         """
         # Only 1D for now
 
@@ -73,27 +88,24 @@ class Vehicle:
 
     def change_lane(self, dest_lane):
         """
-        Changes the lane of the vehicle to the destination lane
+        :param dest_lane: Lane that the driver wants to reach
+        :return: Nothing
+        :author: TEST
 
-        Parameters
-        ----------
-        dest_lane
-
-        Returns
-        -------
-
+        NOT YET IMPLEMENTED - Changes the lane of the vehicle to the dest_lane.
         """
         pass
 
 
+### NOT YET IMPLEMENTED - Classes that inherits from Vehicle with different parameters for the model ###
 
 class Car(Vehicle):
 
-    def __init__(self, x, y, length):
-        super().__init__(x, y, length)
+    def __init__(self, x, y, road, length):
+        super().__init__(x, y, road, length)
 
 
 class Truck(Vehicle):
 
-    def __init__(self, x, y, length):
-        super().__init__(x, y, length)
+    def __init__(self, x, y, road, length):
+        super().__init__(x, y, road, length)
