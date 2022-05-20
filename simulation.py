@@ -26,12 +26,12 @@ if __name__ == '__main__':
     road_obj = Road(200, 1, 10)
     print(road_obj)
 
-    nb_step = 20
+    nb_step = 1000
     dt = 0.5    # Due to the model, any time step below 0.5s leads to a static solution (with no more evolution)
 
     for i in range(nb_step):
         step(road_obj, dt)
-        time.sleep(0.5)
+        time.sleep(0.01)
         print(road_obj)
 
     input("Press any key to continue")

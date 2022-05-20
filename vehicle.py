@@ -1,8 +1,11 @@
 from __future__ import annotations
 import numpy as np
+from random import randint
+from abc import ABC, abstractmethod
 
 
-class Vehicle:
+class Vehicle(ABC):
+    id = 0
 
     def __init__(self, x: int, y: int, road: 'Road', length: int = 1) -> None:
         """
@@ -16,18 +19,10 @@ class Vehicle:
         """
 
         self.road = road
-        self.length = length    # Length of the vehicle, default is 1 slot in the array
-        self.react_time = 1.5   # In seconds
-        self.speed = 80.        # Default speed
-        self.ref_speed = 130.   # Desired speed (130 km/h on highways)
-        self.smoothness = 4.    # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
-        # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
-        self.ref_accel = 0.3    # In m²/s
-        self.ref_decel = 3.0    # In m²/s
-        self.min_gap = 4.       # In meter
         self.x = x              # Vertical position from 0 to width - 1
         self.y = y              # Horizontal position from 0 to length - 1
-        self.type = 1           # Type of vehicle
+        self.id = Vehicle.id    # id of vehicle
+        Vehicle.id += 1
 
     def update_speed(self, leader: Vehicle, dt: float) -> None:
         """
@@ -80,7 +75,7 @@ class Vehicle:
         """
         # Only 1D for now
 
-        gap = leader.y - self.y - 1   # Gap is bumper to bumper so [self, 0, 0, veh2] is a gap of 2 cells
+        gap = leader.y - self.y - leader.length   # Gap is bumper to bumper so [self, 0, 0, leader] is a gap of 2 cells
         if gap < 0:
             gap += self.road.length  # Case in which the leader is at the opposite side of the array but still
             # ahead (infinite road)
@@ -100,16 +95,48 @@ class Vehicle:
         """
         pass
 
+    @abstractmethod
+    def __str__(self):
+        pass
 
 ### NOT YET IMPLEMENTED - Classes that inherits from Vehicle with different parameters for the model ###
+
 
 class Car(Vehicle):
 
     def __init__(self, x, y, road, length):
         super().__init__(x, y, road, length)
 
+        self.length = length  # Length of the vehicle, default is 1 slot in the array
+        self.speed = 0 + randint(-5, 5)  # Default speed
+        self.ref_speed = 130.  # Desired speed (130 km/h on highways)
+        self.smoothness = 4.  # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
+        # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
+        self.ref_accel = 0.3  # In m²/s
+        self.ref_decel = 3.0  # In m²/s
+        self.min_gap = 4.  # In meter
+        self.react_time = 2.0  # In seconds
+        self.type = 1
+
+    def __str__(self):
+        return str(self.id) * self.length
+
 
 class Truck(Vehicle):
 
     def __init__(self, x, y, road, length):
         super().__init__(x, y, road, length)
+
+        self.length = length  # Length of the vehicle, default is 1 slot in the array
+        self.speed = 0 + randint(-5, 5)  # Default speed
+        self.ref_speed = 80.  # Desired speed (130 km/h on highways)
+        self.smoothness = 4.  # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
+        # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
+        self.ref_accel = 0.3  # In m²/s
+        self.ref_decel = 2.0  # In m²/s
+        self.min_gap = 6.  # In meter
+        self.react_time = 2.0  # In seconds
+        self.type = 2
+
+    def __str__(self):
+        return str(self.id) * self.length

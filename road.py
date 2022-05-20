@@ -1,6 +1,6 @@
 import numpy as np
 from random import randint
-from vehicle import Vehicle
+from vehicle import Vehicle, Car, Truck
 
 
 class Road(np.ndarray):
@@ -78,10 +78,7 @@ class Road(np.ndarray):
         for x in range(self.width):
             for y in range(self.length):
                 if self[x, y] != 0:
-                    if self[x, y].type == 1:
-                        r += "C"
-                    elif self[x, y].type == 2:
-                        r += "T"
+                    r += str(self[x, y])
                 else:
                     r += "_"
             r += "\n"
@@ -100,10 +97,13 @@ class Road(np.ndarray):
 
         y = 0
         for i in range(self.nbvehic):
-            self[0, y] = Vehicle(0, y, self)
+            if randint(1, 11) >= 3:
+                self[0, y] = Car(0, y, self, 1)
+            else:
+                self[0, y] = Truck(0, y, self, randint(2, 5))
             self.vehicles.append(self[0, y])
-            y += target_gap + 1
             print("Placing vehicle at coord {0}".format((0, y)))
+            y += target_gap + 1
         print(self)
 
     def place_vehicles_randomly(self):
