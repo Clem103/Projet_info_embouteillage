@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html><head><title>Python: module vehicle</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head><body bgcolor="#f0f0f8">
+
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="heading">
+<tr bgcolor="#7799ee">
+<td valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial">&nbsp;<br><big><big><strong>vehicle</strong></big></big></font></td
+><td align=right valign=bottom
+><font color="#ffffff" face="helvetica, arial"><a href=".">index</a><br><a href="file:d%3A%5Cclement%5Cdocuments%5Censta%5Cprojets_pycharm%5Cprojet_info%5Cvehicle.py">d:\clement\documents\ensta\projets_pycharm\projet_info\vehicle.py</a></font></td></tr></table>
+    <p></p>
+<p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#aa55cc">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Modules</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#aa55cc"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><table width="100%" summary="list"><tr><td width="25%" valign=top><a href="numpy.html">numpy</a><br>
+</td><td width="25%" valign=top></td><td width="25%" valign=top></td><td width="25%" valign=top></td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ee77aa">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Classes</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#ee77aa"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><dl>
+<dt><font face="helvetica, arial"><a href="builtins.html#object">builtins.object</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="vehicle.html#Vehicle">Vehicle</a>
+</font></dt><dd>
+<dl>
+<dt><font face="helvetica, arial"><a href="vehicle.html#Car">Car</a>
+</font></dt><dt><font face="helvetica, arial"><a href="vehicle.html#Truck">Truck</a>
+</font></dt></dl>
+</dd>
+</dl>
+</dd>
+</dl>
+ <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Car">class <strong>Car</strong></a>(<a href="vehicle.html#Vehicle">Vehicle</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Car">Car</a>(x,&nbsp;y,&nbsp;road,&nbsp;length)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="vehicle.html#Car">Car</a></dd>
+<dd><a href="vehicle.html#Vehicle">Vehicle</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Car-__init__"><strong>__init__</strong></a>(self, x, y, road, length)</dt><dd><tt>:param&nbsp;x:&nbsp;Vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;vehicle<br>
+:param&nbsp;y:&nbsp;Horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;vehicle<br>
+:param&nbsp;road:&nbsp;Road&nbsp;<a href="builtins.html#object">object</a>&nbsp;where&nbsp;the&nbsp;vehicle&nbsp;is&nbsp;located<br>
+:param&nbsp;length:&nbsp;Length&nbsp;of&nbsp;the&nbsp;vehicle<br>
+&nbsp;<br>
+Initiates&nbsp;the&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;class&nbsp;on&nbsp;the&nbsp;given&nbsp;road&nbsp;at&nbsp;given&nbsp;coordinates.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="vehicle.html#Vehicle">Vehicle</a>:<br>
+<dl><dt><a name="Car-calculate_accel"><strong>calculate_accel</strong></a>(self, leader: 'Vehicle') -&gt; 'float'</dt><dd><tt>:param&nbsp;leader:&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;that&nbsp;is&nbsp;ahead<br>
+:return:&nbsp;new_accel:&nbsp;Calculated&nbsp;acceleration<br>
+&nbsp;<br>
+Calculates&nbsp;the&nbsp;acceleration&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;using&nbsp;the&nbsp;Intelligent&nbsp;Driver&nbsp;Model&nbsp;(IDM).&nbsp;<br>
+&nbsp;<br>
+Called&nbsp;by&nbsp;<a href="#Vehicle">Vehicle</a>.update_speed.</tt></dd></dl>
+
+<dl><dt><a name="Car-change_lane"><strong>change_lane</strong></a>(self, dest_lane)</dt><dd><tt>:param&nbsp;dest_lane:&nbsp;Lane&nbsp;that&nbsp;the&nbsp;driver&nbsp;wants&nbsp;to&nbsp;reach<br>
+:return:&nbsp;Nothing<br>
+:author:&nbsp;TEST<br>
+&nbsp;<br>
+NOT&nbsp;YET&nbsp;IMPLEMENTED&nbsp;-&nbsp;Changes&nbsp;the&nbsp;lane&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;to&nbsp;the&nbsp;dest_lane.</tt></dd></dl>
+
+<dl><dt><a name="Car-get_gap"><strong>get_gap</strong></a>(self, leader)</dt><dd><tt>:param&nbsp;leader:&nbsp;Other&nbsp;vehicle<br>
+:return:&nbsp;gap&nbsp;-&nbsp;The&nbsp;value&nbsp;of&nbsp;the&nbsp;gap&nbsp;between&nbsp;the&nbsp;vehicle&nbsp;1&nbsp;and&nbsp;the&nbsp;vehicle&nbsp;2<br>
+&nbsp;<br>
+Calculates&nbsp;the&nbsp;gap&nbsp;between&nbsp;two&nbsp;vehicles&nbsp;assuming&nbsp;the&nbsp;given&nbsp;vehicle&nbsp;is&nbsp;ahead&nbsp;and&nbsp;return&nbsp;the&nbsp;absolute&nbsp;value&nbsp;of&nbsp;it.</tt></dd></dl>
+
+<dl><dt><a name="Car-update_speed"><strong>update_speed</strong></a>(self, leader: 'Vehicle', dt: 'float') -&gt; 'None'</dt><dd><tt>:param&nbsp;leader:&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;that&nbsp;is&nbsp;ahead.<br>
+:param&nbsp;dt:&nbsp;Time&nbsp;increment&nbsp;used&nbsp;in&nbsp;simulation<br>
+:return:&nbsp;Nothing<br>
+&nbsp;<br>
+Updates&nbsp;the&nbsp;speed&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;using&nbsp;the&nbsp;ballistic&nbsp;method.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="vehicle.html#Vehicle">Vehicle</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Truck">class <strong>Truck</strong></a>(<a href="vehicle.html#Vehicle">Vehicle</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Truck">Truck</a>(x,&nbsp;y,&nbsp;road,&nbsp;length)<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%"><dl><dt>Method resolution order:</dt>
+<dd><a href="vehicle.html#Truck">Truck</a></dd>
+<dd><a href="vehicle.html#Vehicle">Vehicle</a></dd>
+<dd><a href="builtins.html#object">builtins.object</a></dd>
+</dl>
+<hr>
+Methods defined here:<br>
+<dl><dt><a name="Truck-__init__"><strong>__init__</strong></a>(self, x, y, road, length)</dt><dd><tt>:param&nbsp;x:&nbsp;Vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;vehicle<br>
+:param&nbsp;y:&nbsp;Horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;vehicle<br>
+:param&nbsp;road:&nbsp;Road&nbsp;<a href="builtins.html#object">object</a>&nbsp;where&nbsp;the&nbsp;vehicle&nbsp;is&nbsp;located<br>
+:param&nbsp;length:&nbsp;Length&nbsp;of&nbsp;the&nbsp;vehicle<br>
+&nbsp;<br>
+Initiates&nbsp;the&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;class&nbsp;on&nbsp;the&nbsp;given&nbsp;road&nbsp;at&nbsp;given&nbsp;coordinates.</tt></dd></dl>
+
+<hr>
+Methods inherited from <a href="vehicle.html#Vehicle">Vehicle</a>:<br>
+<dl><dt><a name="Truck-calculate_accel"><strong>calculate_accel</strong></a>(self, leader: 'Vehicle') -&gt; 'float'</dt><dd><tt>:param&nbsp;leader:&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;that&nbsp;is&nbsp;ahead<br>
+:return:&nbsp;new_accel:&nbsp;Calculated&nbsp;acceleration<br>
+&nbsp;<br>
+Calculates&nbsp;the&nbsp;acceleration&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;using&nbsp;the&nbsp;Intelligent&nbsp;Driver&nbsp;Model&nbsp;(IDM).&nbsp;<br>
+&nbsp;<br>
+Called&nbsp;by&nbsp;<a href="#Vehicle">Vehicle</a>.update_speed.</tt></dd></dl>
+
+<dl><dt><a name="Truck-change_lane"><strong>change_lane</strong></a>(self, dest_lane)</dt><dd><tt>:param&nbsp;dest_lane:&nbsp;Lane&nbsp;that&nbsp;the&nbsp;driver&nbsp;wants&nbsp;to&nbsp;reach<br>
+:return:&nbsp;Nothing<br>
+:author:&nbsp;TEST<br>
+&nbsp;<br>
+NOT&nbsp;YET&nbsp;IMPLEMENTED&nbsp;-&nbsp;Changes&nbsp;the&nbsp;lane&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;to&nbsp;the&nbsp;dest_lane.</tt></dd></dl>
+
+<dl><dt><a name="Truck-get_gap"><strong>get_gap</strong></a>(self, leader)</dt><dd><tt>:param&nbsp;leader:&nbsp;Other&nbsp;vehicle<br>
+:return:&nbsp;gap&nbsp;-&nbsp;The&nbsp;value&nbsp;of&nbsp;the&nbsp;gap&nbsp;between&nbsp;the&nbsp;vehicle&nbsp;1&nbsp;and&nbsp;the&nbsp;vehicle&nbsp;2<br>
+&nbsp;<br>
+Calculates&nbsp;the&nbsp;gap&nbsp;between&nbsp;two&nbsp;vehicles&nbsp;assuming&nbsp;the&nbsp;given&nbsp;vehicle&nbsp;is&nbsp;ahead&nbsp;and&nbsp;return&nbsp;the&nbsp;absolute&nbsp;value&nbsp;of&nbsp;it.</tt></dd></dl>
+
+<dl><dt><a name="Truck-update_speed"><strong>update_speed</strong></a>(self, leader: 'Vehicle', dt: 'float') -&gt; 'None'</dt><dd><tt>:param&nbsp;leader:&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;that&nbsp;is&nbsp;ahead.<br>
+:param&nbsp;dt:&nbsp;Time&nbsp;increment&nbsp;used&nbsp;in&nbsp;simulation<br>
+:return:&nbsp;Nothing<br>
+&nbsp;<br>
+Updates&nbsp;the&nbsp;speed&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;using&nbsp;the&nbsp;ballistic&nbsp;method.</tt></dd></dl>
+
+<hr>
+Data descriptors inherited from <a href="vehicle.html#Vehicle">Vehicle</a>:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table> <p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#ffc8d8">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#000000" face="helvetica, arial"><a name="Vehicle">class <strong>Vehicle</strong></a>(<a href="builtins.html#object">builtins.object</a>)</font></td></tr>
+    
+<tr bgcolor="#ffc8d8"><td rowspan=2><tt>&nbsp;&nbsp;&nbsp;</tt></td>
+<td colspan=2><tt><a href="#Vehicle">Vehicle</a>(x:&nbsp;'int',&nbsp;y:&nbsp;'int',&nbsp;road:&nbsp;"'Road'",&nbsp;length:&nbsp;'int'&nbsp;=&nbsp;1)&nbsp;-&amp;gt;&nbsp;'None'<br>
+&nbsp;<br>
+<br>&nbsp;</tt></td></tr>
+<tr><td>&nbsp;</td>
+<td width="100%">Methods defined here:<br>
+<dl><dt><a name="Vehicle-__init__"><strong>__init__</strong></a>(self, x: 'int', y: 'int', road: "'Road'", length: 'int' = 1) -&gt; 'None'</dt><dd><tt>:param&nbsp;x:&nbsp;Vertical&nbsp;position&nbsp;of&nbsp;the&nbsp;vehicle<br>
+:param&nbsp;y:&nbsp;Horizontal&nbsp;position&nbsp;of&nbsp;the&nbsp;vehicle<br>
+:param&nbsp;road:&nbsp;Road&nbsp;<a href="builtins.html#object">object</a>&nbsp;where&nbsp;the&nbsp;vehicle&nbsp;is&nbsp;located<br>
+:param&nbsp;length:&nbsp;Length&nbsp;of&nbsp;the&nbsp;vehicle<br>
+&nbsp;<br>
+Initiates&nbsp;the&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;class&nbsp;on&nbsp;the&nbsp;given&nbsp;road&nbsp;at&nbsp;given&nbsp;coordinates.</tt></dd></dl>
+
+<dl><dt><a name="Vehicle-calculate_accel"><strong>calculate_accel</strong></a>(self, leader: 'Vehicle') -&gt; 'float'</dt><dd><tt>:param&nbsp;leader:&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;that&nbsp;is&nbsp;ahead<br>
+:return:&nbsp;new_accel:&nbsp;Calculated&nbsp;acceleration<br>
+&nbsp;<br>
+Calculates&nbsp;the&nbsp;acceleration&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;using&nbsp;the&nbsp;Intelligent&nbsp;Driver&nbsp;Model&nbsp;(IDM).&nbsp;<br>
+&nbsp;<br>
+Called&nbsp;by&nbsp;<a href="#Vehicle">Vehicle</a>.update_speed.</tt></dd></dl>
+
+<dl><dt><a name="Vehicle-change_lane"><strong>change_lane</strong></a>(self, dest_lane)</dt><dd><tt>:param&nbsp;dest_lane:&nbsp;Lane&nbsp;that&nbsp;the&nbsp;driver&nbsp;wants&nbsp;to&nbsp;reach<br>
+:return:&nbsp;Nothing<br>
+:author:&nbsp;TEST<br>
+&nbsp;<br>
+NOT&nbsp;YET&nbsp;IMPLEMENTED&nbsp;-&nbsp;Changes&nbsp;the&nbsp;lane&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;to&nbsp;the&nbsp;dest_lane.</tt></dd></dl>
+
+<dl><dt><a name="Vehicle-get_gap"><strong>get_gap</strong></a>(self, leader)</dt><dd><tt>:param&nbsp;leader:&nbsp;Other&nbsp;vehicle<br>
+:return:&nbsp;gap&nbsp;-&nbsp;The&nbsp;value&nbsp;of&nbsp;the&nbsp;gap&nbsp;between&nbsp;the&nbsp;vehicle&nbsp;1&nbsp;and&nbsp;the&nbsp;vehicle&nbsp;2<br>
+&nbsp;<br>
+Calculates&nbsp;the&nbsp;gap&nbsp;between&nbsp;two&nbsp;vehicles&nbsp;assuming&nbsp;the&nbsp;given&nbsp;vehicle&nbsp;is&nbsp;ahead&nbsp;and&nbsp;return&nbsp;the&nbsp;absolute&nbsp;value&nbsp;of&nbsp;it.</tt></dd></dl>
+
+<dl><dt><a name="Vehicle-update_speed"><strong>update_speed</strong></a>(self, leader: 'Vehicle', dt: 'float') -&gt; 'None'</dt><dd><tt>:param&nbsp;leader:&nbsp;<a href="#Vehicle">Vehicle</a>&nbsp;that&nbsp;is&nbsp;ahead.<br>
+:param&nbsp;dt:&nbsp;Time&nbsp;increment&nbsp;used&nbsp;in&nbsp;simulation<br>
+:return:&nbsp;Nothing<br>
+&nbsp;<br>
+Updates&nbsp;the&nbsp;speed&nbsp;of&nbsp;the&nbsp;vehicle&nbsp;using&nbsp;the&nbsp;ballistic&nbsp;method.</tt></dd></dl>
+
+<hr>
+Data descriptors defined here:<br>
+<dl><dt><strong>__dict__</strong></dt>
+<dd><tt>dictionary&nbsp;for&nbsp;instance&nbsp;variables&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+<dl><dt><strong>__weakref__</strong></dt>
+<dd><tt>list&nbsp;of&nbsp;weak&nbsp;references&nbsp;to&nbsp;the&nbsp;object&nbsp;(if&nbsp;defined)</tt></dd>
+</dl>
+</td></tr></table></td></tr></table><p>
+<table width="100%" cellspacing=0 cellpadding=2 border=0 summary="section">
+<tr bgcolor="#55aa55">
+<td colspan=3 valign=bottom>&nbsp;<br>
+<font color="#ffffff" face="helvetica, arial"><big><strong>Data</strong></big></font></td></tr>
+    
+<tr><td bgcolor="#55aa55"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
+<td width="100%"><strong>annotations</strong> = _Feature((3, 7, 0, 'beta', 1), (4, 0, 0, 'alpha', 0), 1048576)</td></tr></table>
+</body></html>
