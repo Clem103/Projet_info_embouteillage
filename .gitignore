@@ -1,8 +1,3 @@
 
-.idea/workspace.xml
-.idea/workspace.xml
-__pycache__/vehicle.cpython-37.pyc
-__pycache__/test.cpython-37.pyc
-__pycache__/simulation.cpython-37.pyc
-__pycache__/road.cpython-37.pyc
-__pycache__/ihm.cpython-37.pyc
+.idea/
+__pycache__/

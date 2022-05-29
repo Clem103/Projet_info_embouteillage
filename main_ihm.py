@@ -2,100 +2,108 @@ import sys
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
 import ihm
 import road
-import vehicle
-
+from simulation import step
 
 
 class MonAppli(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.ui=ihm.Ui_main_ihm()
+
+        # Setting up the UI
+
+        self.ui = ihm.Ui_main_ihm()
         self.ui.setupUi(self)
 
+        # Setting up timer for simulation speed
+
+        self.timer = QtCore.QTimer()
+        self.timer.timeout.connect(self.one_step)
+
+        # Connecting the buttons to functions
+
         self.ui.bouton_simu.clicked.connect(self.simuler)
-        self.ui.bouton_quitter.clicked.connect(self.quitter)
         self.ui.bouton_pause.clicked.connect(self.pause)
-        #self.ui.slider_vitesse.sliderPressed.connect(self.vitesse)
+        self.ui.slider_vitesse.valueChanged.connect(self.set_sim_speed)
         self.ui.bouton_gen.clicked.connect(self.generer)
-        self.ui.spinbox_nb_voies.valueChanged.connect(self.nb_voies)
-        self.ui.spinbox_nb_vehicle.valueChanged.connect(self.nb_vehicle)
-        self.ui.spinbox_longueur_route.valueChanged.connect(self.longueur_route)
-        self.ui.slider_vitesse.sliderReleased.connect(self.vitesse)
+        self.ui.spinbox_nb_voies.valueChanged.connect(self.set_road_width)
+        self.ui.spinbox_nb_vehicle.valueChanged.connect(self.set_nb_vehicle)
+        self.ui.spinbox_longueur_route.valueChanged.connect(self.set_road_length)
 
-        self.longueur_route()
-        self.vitesse()
-        self.nb_voies()
-        self.nb_vehicle()
+        # Setting up background
 
-        roadmap=QtGui.QPixmap("route1.png")
-        pal=QtGui.QPalette()
+        roadmap = QtGui.QPixmap("route1.jpg")
+        pal = QtGui.QPalette()
         pal.setBrush(QtGui.QPalette.Background, QtGui.QBrush(roadmap))
         self.ui.container.lower()
         self.ui.container.stackUnder(self)
         self.ui.container.setAutoFillBackground(True)
         self.ui.container.setPalette(pal)
 
-        self.painter=QtGui.QPainter()
-        self.ui.container.paintEvent=self.drawRoad()
+        # Setting up painter and function called upon container update
+        self.painter = QtGui.QPainter()
+        self.ui.container.paintEvent = self.drawRoad
 
-
+        # Setting up simulation with default parameters
+        self.road_length = 100
+        self.road_width = 1
+        self.nb_vehicle = 20
+        self.road = None
+        self.sim_speed = 1
         self.generer()
 
     def simuler(self):
+        print("Starting / Resetting the simulation")
+        if self.timer.isActive():
+            self.timer.stop()
+        self.timer.start(round(500/self.sim_speed))   # 0.5 is the default time step (simulation running at 100%)
+
+    def one_step(self):
+        # Time increment for simulation is always 0.5
+        # Otherwise, the physical model doesn't work properly
+        step(self.road, time_increment=0.5)
         self.ui.container.update()
-        print("appel de la fonction simuler")
+        print(self.road)
 
     def pause(self):
-        print("appel de la fonction pause")
+        print("Pausing the simulation")
+        self.timer.stop()
 
-    def quitter(self):
-        print("appel de la fonction quitter")
+    def set_sim_speed(self):
+        print("Changed simulation speed")
+        self.sim_speed = self.ui.LCD_vitesse.value() / 100
+        if self.timer.isActive():
+            self.simuler()
 
-    def vitesse(self):
-        print("appel du slider vitesse")
-        self.vitesse = self.ui.LCD_vitesse.value()
-        #print(self.vitesse)
+    def set_nb_vehicle(self):
+        self.nb_vehicle = self.ui.spinbox_nb_vehicle.value()
+        print("Changed number of vehicles")
 
-    def nb_vehicle(self):
-        self.nb_vehic = self.ui.spinbox_nb_vehicle.value()
-        print("appel du spinbox nb de véhicle")
-        #print("nb vehic=",self.nb_vehic)
+    def set_road_width(self):
+        self.road_width = self.ui.spinbox_nb_voies.value()
+        print("Changed road width value")
 
-    def nb_voies(self):
-        self.nbvoies = self.ui.spinbox_nb_voies.value()
-        print("appel du spinbox nb de voies")
-        #print("nb voies=",self.nbvoies)
-
-
-    def longueur_route(self):
-        self.long = self.ui.spinbox_longueur_route.value()
-        print("appel du spinbox longueur route")
-        #print("longueur route=",self.long)
-
+    def set_road_length(self):
+        self.road_length = self.ui.spinbox_longueur_route.value()
+        print("Changed road length value")
 
     def generer(self):
-        self.ui.container.update()
-        print("appel de la fonction générer")
-        print(road.Road(self.long,self.nbvoies,self.nb_vehic))
+        print("Setting up simulation")
+        self.road = road.Road(self.road_length, self.road_width, self.nb_vehicle)
         self.ui.container.update()
 
-    def drawRoad(self):
-        print("DESSIN DES VOITURES")
+    def drawRoad(self, *args):  # This function needs to have *args as arguments
         self.painter.begin(self.ui.container)
 
-#        for i in range(self.nb_vehic):
-#            self.painter.setPen(QtCore.Qt.green)
-#            self.painter.drawRect(150,road.Road.L(road.Road(self.long,self.nbvoies,self.nb_vehic))[i],50,50)
-        print("DESSINS DES VOITURES 2ème edition")
-        self.painter.setPen(QtCore.Qt.green)
-        print("DESSIN DES VOITURES 3ème edition")
-        self.painter.drawRect(380,150,50,50)      # au milieu juste pour essayer l'affichage
-        print("DESSIN DES VOITURES END")
+        for veh in self.road.vehicles:
+            self.painter.setPen(QtCore.Qt.green)
+            self.painter.drawRect(veh.y * 10, 150, 10 * veh.length, 10)  # Dimensions of the rect are to be changed but it works
+        # print("DESSINS DES VOITURES 2ème edition")
+        # self.painter.setPen(QtCore.Qt.green)
+        # print("DESSIN DES VOITURES 3ème edition")
+        # self.painter.drawRect(380,150,50,50)      # au milieu juste pour essayer l'affichage
+        # print("DESSIN DES VOITURES END")
 
         self.painter.end()
-
-
-
 
 
 if __name__ == "__main__":

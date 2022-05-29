@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\Users\Mipam\Documents\cours\projet python\Projet_info_embouteillage-master\ihm.ui'
+# Form implementation generated from reading ui file 'ihm.ui'
 #
-# Created by: PyQt5 UI code generator 5.14.0
+# Created by: PyQt5 UI code generator 5.13.0
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -30,7 +30,9 @@ class Ui_main_ihm(object):
         self.bouton_quitter.setObjectName("bouton_quitter")
         self.slider_vitesse = QtWidgets.QSlider(self.centralwidget)
         self.slider_vitesse.setGeometry(QtCore.QRect(30, 360, 160, 16))
-        self.slider_vitesse.setMaximum(100)
+        self.slider_vitesse.setMinimum(1)
+        self.slider_vitesse.setMaximum(500)
+        self.slider_vitesse.setProperty("value", 100)
         self.slider_vitesse.setOrientation(QtCore.Qt.Horizontal)
         self.slider_vitesse.setObjectName("slider_vitesse")
         self.label_slider_vitesse = QtWidgets.QLabel(self.centralwidget)
@@ -41,6 +43,7 @@ class Ui_main_ihm(object):
         self.bouton_gen.setObjectName("bouton_gen")
         self.LCD_vitesse = QtWidgets.QLCDNumber(self.centralwidget)
         self.LCD_vitesse.setGeometry(QtCore.QRect(120, 330, 64, 23))
+        self.LCD_vitesse.setProperty("intValue", 100)
         self.LCD_vitesse.setObjectName("LCD_vitesse")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(240, 330, 201, 101))
@@ -64,6 +67,7 @@ class Ui_main_ihm(object):
         self.spinbox_nb_vehicle.setMaximumSize(QtCore.QSize(71, 16777215))
         self.spinbox_nb_vehicle.setMinimum(1)
         self.spinbox_nb_vehicle.setMaximum(100000)
+        self.spinbox_nb_vehicle.setProperty("value", 20)
         self.spinbox_nb_vehicle.setObjectName("spinbox_nb_vehicle")
         self.gridLayout.addWidget(self.spinbox_nb_vehicle, 1, 1, 1, 1)
         self.label_longueur_route = QtWidgets.QLabel(self.layoutWidget)
@@ -75,9 +79,21 @@ class Ui_main_ihm(object):
         self.spinbox_longueur_route.setMaximum(1000000)
         self.spinbox_longueur_route.setObjectName("spinbox_longueur_route")
         self.gridLayout.addWidget(self.spinbox_longueur_route, 2, 1, 1, 1)
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(190, 330, 47, 21))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setObjectName("label")
         main_ihm.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(main_ihm)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 18))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 802, 21))
         self.menubar.setObjectName("menubar")
         main_ihm.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(main_ihm)
@@ -100,6 +116,7 @@ class Ui_main_ihm(object):
         self.label_nb_voies.setText(_translate("main_ihm", "Nb de voies "))
         self.label_nb_vehicle.setText(_translate("main_ihm", "Nb véhicules "))
         self.label_longueur_route.setText(_translate("main_ihm", "Longueur route "))
+        self.label.setText(_translate("main_ihm", "%"))
 
 
 if __name__ == "__main__":

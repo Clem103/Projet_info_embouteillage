@@ -94,7 +94,6 @@ class Road(np.ndarray):
         :author: Clément Vellu
         """
         target_gap = self.length // self.nbvehic - 1
-
         y = 0
         for i in range(self.nbvehic):
             if randint(1, 11) >= 3:
@@ -104,7 +103,10 @@ class Road(np.ndarray):
             self.vehicles.append(self[0, y])
             print("Placing vehicle at coord {0}".format((0, y)))
             y += target_gap + 1
+
         print(self)
+
+
 
     def place_vehicles_randomly(self):
         """
@@ -124,6 +126,7 @@ class Road(np.ndarray):
             self[x, y] = veh
             veh.x = x
             veh.y = y
+
             print(self)
 
     def update_pos(self):
@@ -135,7 +138,6 @@ class Road(np.ndarray):
         :return: Nothing
         :author: Clément Vellu
         """
-
         self.fill(0)
 
         for veh in self.vehicles:
@@ -145,4 +147,4 @@ class Road(np.ndarray):
 
 if __name__ == "__main__":
     # For testing purpose
-    a = Road(1000, 1, 50)  # Kept at 1 lane for the moment and 1000 cell long (scale for 4km simulation)
+    a = Road(100, 1, 2)  # Kept at 1 lane for the moment and 1000 cell long (scale for 4km simulation)
