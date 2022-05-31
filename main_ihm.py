@@ -2,6 +2,7 @@ import sys
 from PyQt5 import QtGui, QtCore, QtWidgets, uic
 import ihm
 import road
+import numpy as np
 from simulation import step
 
 
@@ -31,9 +32,9 @@ class MonAppli(QtWidgets.QMainWindow):
 
         # Setting up background
 
-        roadmap = QtGui.QPixmap("route1.jpg")
+        fond = QtGui.QPixmap("fond.jpg").scaled(self.ui.container.width(), self.ui.container.height(), QtCore.Qt.KeepAspectRatio)
         pal = QtGui.QPalette()
-        pal.setBrush(QtGui.QPalette.Background, QtGui.QBrush(roadmap))
+        pal.setBrush(QtGui.QPalette.Background, QtGui.QBrush(fond))
         self.ui.container.lower()
         self.ui.container.stackUnder(self)
         self.ui.container.setAutoFillBackground(True)
@@ -41,21 +42,23 @@ class MonAppli(QtWidgets.QMainWindow):
 
         # Setting up painter and function called upon container update
         self.painter = QtGui.QPainter()
-        self.ui.container.paintEvent = self.drawRoad
+        self.ui.container.paintEvent = self.draw_vehicles
 
         # Setting up simulation with default parameters
         self.road_length = 100
         self.road_width = 1
-        self.nb_vehicle = 20
+        self.nb_vehicle = 10
         self.road = None
         self.sim_speed = 1
+
         self.generer()
+        self.draw_road()
 
     def simuler(self):
         print("Starting / Resetting the simulation")
         if self.timer.isActive():
             self.timer.stop()
-        self.timer.start(round(500/self.sim_speed))   # 0.5 is the default time step (simulation running at 100%)
+        self.timer.start(round(100/self.sim_speed))   # 0.5 is the default time step (simulation running at 100%)
 
     def one_step(self):
         # Time increment for simulation is always 0.5
@@ -91,12 +94,45 @@ class MonAppli(QtWidgets.QMainWindow):
         self.road = road.Road(self.road_length, self.road_width, self.nb_vehicle)
         self.ui.container.update()
 
-    def drawRoad(self, *args):  # This function needs to have *args as arguments
+    def draw_road(self):    # N'est pas déclenché pendant un paint event donc ne fonctionne pas
+        print("Draw_road")
+        self.painter.begin(self.ui.container)
+        self.painter.end()
+
+    def draw_vehicles(self, *args):  # This function needs to have *args as arguments
         self.painter.begin(self.ui.container)
 
+        # Draw road
+
+        pen = QtGui.QPen()
+        pen.setStyle(QtCore.Qt.SolidLine)
+        pen.setWidth(60)
+        pen.setBrush(QtCore.Qt.black)
+        self.painter.setPen(pen)
+        width = self.ui.container.width()
+        height = self.ui.container.height()
+        radius = min(int(height * 0.45), int(width * 0.45))
+        center = QtCore.QPoint(width//2, height//2)
+        self.painter.drawEllipse(center, radius, radius)
+        pen.setStyle(QtCore.Qt.SolidLine)
+        pen.setWidth(5)
+        pen.setBrush(QtCore.Qt.white)
+        self.painter.setPen(pen)
+        self.painter.drawEllipse(center, min(int(height * 0.42), int(width * 0.42)), min(int(height * 0.42), int(width * 0.42)))
+        self.painter.drawEllipse(center, min(int(height * 0.48), int(width * 0.48)), min(int(height * 0.48), int(width * 0.48)))
+
+        # Draw vehicules
         for veh in self.road.vehicles:
             self.painter.setPen(QtCore.Qt.green)
-            self.painter.drawRect(veh.y * 10, 150, 10 * veh.length, 10)  # Dimensions of the rect are to be changed but it works
+            d_thetha = 2*np.pi/self.road_length
+            # self.painter.drawRect(veh.y * 10, 150, 10 * veh.length, 10)  # Dimensions of the rect are to be changed but it works
+            x_circle = radius*np.cos(d_thetha*veh.y)
+            y_circle = radius*np.sin(d_thetha*veh.y)
+            rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
+            veh_rect = QtCore.QRect(0, 0, veh.length, veh.length)
+            veh_rect.moveCenter(rect_center)
+            # self.painter.drawRect(int(center.x() + x_circle), int(center.y() + y_circle), veh.length, veh.length)
+            self.painter.drawRect(veh_rect)
         # print("DESSINS DES VOITURES 2ème edition")
         # self.painter.setPen(QtCore.Qt.green)
         # print("DESSIN DES VOITURES 3ème edition")

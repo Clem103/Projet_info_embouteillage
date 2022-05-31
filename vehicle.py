@@ -108,7 +108,7 @@ class Car(Vehicle):
         super().__init__(x, y, road, length)
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
-        self.speed = 0 + randint(-5, 5)  # Default speed
+        self.speed = 5  # Default speed
         self.ref_speed = 130.  # Desired speed (130 km/h on highways)
         self.smoothness = 4.  # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
         # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
@@ -128,7 +128,7 @@ class Truck(Vehicle):
         super().__init__(x, y, road, length)
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
-        self.speed = 0 + randint(-5, 5)  # Default speed
+        self.speed = 5  # Default speed
         self.ref_speed = 80.  # Desired speed (130 km/h on highways)
         self.smoothness = 4.  # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
         # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
