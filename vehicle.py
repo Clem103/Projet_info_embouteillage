@@ -109,7 +109,7 @@ class Car(Vehicle):
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
         self.speed = 5  # Default speed
-        self.ref_speed = 130.  # Desired speed (130 km/h on highways)
+        self.ref_speed = 130/3.6  # Desired speed (130 km/h on highways / 36.1 m/s)
         self.smoothness = 4.  # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
         # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
         self.ref_accel = 0.3  # In m²/s
@@ -129,7 +129,7 @@ class Truck(Vehicle):
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
         self.speed = 5  # Default speed
-        self.ref_speed = 80.  # Desired speed (130 km/h on highways)
+        self.ref_speed = 80/3.6  # Desired speed (80 km/h on highways)
         self.smoothness = 4.  # See https://towardsdatascience.com/simulating-traffic-flow-in-python-ee1eab4dd20f
         # for delta explanation and https://traffic-simulation.de/info/info_IDM.html for value
         self.ref_accel = 0.3  # In m²/s

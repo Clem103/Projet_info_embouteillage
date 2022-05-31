@@ -106,8 +106,6 @@ class Road(np.ndarray):
 
         print(self)
 
-
-
     def place_vehicles_randomly(self):
         """
         Shuffles the location of vehicles.
@@ -143,6 +141,12 @@ class Road(np.ndarray):
         for veh in self.vehicles:
             y = veh.y % self.length
             self[0, y] = veh
+
+    def get_mean_speed(self, counter, sum):
+        if counter == self.nbvehic:
+            return sum/self.nbvehic
+        else:
+            return self.get_mean_speed(counter + 1, sum + self.vehicles[counter].speed)
 
 
 if __name__ == "__main__":

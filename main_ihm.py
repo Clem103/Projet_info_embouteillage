@@ -52,7 +52,6 @@ class MonAppli(QtWidgets.QMainWindow):
         self.sim_speed = 1
 
         self.generer()
-        self.draw_road()
 
     def simuler(self):
         print("Starting / Resetting the simulation")
@@ -65,7 +64,7 @@ class MonAppli(QtWidgets.QMainWindow):
         # Otherwise, the physical model doesn't work properly
         step(self.road, time_increment=0.5)
         self.ui.container.update()
-        print(self.road)
+        # print(self.road) for debugging purpose
 
     def pause(self):
         print("Pausing the simulation")
@@ -94,11 +93,6 @@ class MonAppli(QtWidgets.QMainWindow):
         self.road = road.Road(self.road_length, self.road_width, self.nb_vehicle)
         self.ui.container.update()
 
-    def draw_road(self):    # N'est pas déclenché pendant un paint event donc ne fonctionne pas
-        print("Draw_road")
-        self.painter.begin(self.ui.container)
-        self.painter.end()
-
     def draw_vehicles(self, *args):  # This function needs to have *args as arguments
         self.painter.begin(self.ui.container)
 
@@ -122,6 +116,7 @@ class MonAppli(QtWidgets.QMainWindow):
         self.painter.drawEllipse(center, min(int(height * 0.48), int(width * 0.48)), min(int(height * 0.48), int(width * 0.48)))
 
         # Draw vehicules
+
         for veh in self.road.vehicles:
             self.painter.setPen(QtCore.Qt.green)
             d_thetha = 2*np.pi/self.road_length
@@ -140,6 +135,7 @@ class MonAppli(QtWidgets.QMainWindow):
         # print("DESSIN DES VOITURES END")
 
         self.painter.end()
+        print(self.road.get_mean_speed(0, 0))
 
 
 if __name__ == "__main__":
