@@ -26,9 +26,9 @@ class MonAppli(QtWidgets.QMainWindow):
         self.ui.bouton_pause.clicked.connect(self.pause)
         self.ui.slider_vitesse.valueChanged.connect(self.set_sim_speed)
         self.ui.bouton_gen.clicked.connect(self.generer)
-        self.ui.spinbox_nb_voies.valueChanged.connect(self.set_road_width)
         self.ui.spinbox_nb_vehicle.valueChanged.connect(self.set_nb_vehicle)
         self.ui.spinbox_longueur_route.valueChanged.connect(self.set_road_length)
+        self.ui.disp_img.valueChanged.connect(self.switch_display)
 
         # Setting up background
 
@@ -42,14 +42,15 @@ class MonAppli(QtWidgets.QMainWindow):
 
         # Setting up painter and function called upon container update
         self.painter = QtGui.QPainter()
-        self.ui.container.paintEvent = self.draw_vehicles
+        self.ui.container.paintEvent = self.update_screen
 
         # Setting up simulation with default parameters
-        self.road_length = 100
+        self.road_length = 500
         self.road_width = 1
-        self.nb_vehicle = 10
+        self.nb_vehicle = 40
         self.road = None
         self.sim_speed = 1
+        self.disp_img = 1
 
         self.generer()
 
@@ -57,7 +58,7 @@ class MonAppli(QtWidgets.QMainWindow):
         print("Starting / Resetting the simulation")
         if self.timer.isActive():
             self.timer.stop()
-        self.timer.start(round(100/self.sim_speed))   # 0.5 is the default time step (simulation running at 100%)
+        self.timer.start(round(30/self.sim_speed))   # 0.5 is the default time step (simulation running at 100%)
 
     def one_step(self):
         # Time increment for simulation is always 0.5
@@ -80,10 +81,6 @@ class MonAppli(QtWidgets.QMainWindow):
         self.nb_vehicle = self.ui.spinbox_nb_vehicle.value()
         print("Changed number of vehicles")
 
-    def set_road_width(self):
-        self.road_width = self.ui.spinbox_nb_voies.value()
-        print("Changed road width value")
-
     def set_road_length(self):
         self.road_length = self.ui.spinbox_longueur_route.value()
         print("Changed road length value")
@@ -93,50 +90,55 @@ class MonAppli(QtWidgets.QMainWindow):
         self.road = road.Road(self.road_length, self.road_width, self.nb_vehicle)
         self.ui.container.update()
 
-    def draw_vehicles(self, *args):  # This function needs to have *args as arguments
+    def update_screen(self, *args):  # This function needs to have *args as arguments
+
+        # Update mean speed LCD display
+
+        self.ui.LCD_vitesse_moy.display('{:.02f}'.format(self.road.get_mean_speed(0, 0) * 3.6))
+
+        # Init container painter
         self.painter.begin(self.ui.container)
 
         # Draw road
+        width = self.ui.container.width()
+        height = self.ui.container.height()
+        radius = min(int(height * 0.45), int(width * 0.45))
+        center = QtCore.QPoint(width // 2, height // 2)
+        self.draw_road(width, height, radius, center)
+
+        # Draw vehicles
+        for veh in self.road.vehicles:
+
+            d_theta = 2*np.pi/self.road_length
+            z = 2000/self.road_length # Zooming factor
+
+            if not self.disp_img:
+                veh.draw_rect(self.painter, d_theta, radius, center, z)
+            else:
+                veh.draw_image(self.painter, d_theta, radius, center, z)
+
+        self.painter.end()
+
+    def draw_road(self, width, height, radius, center):
 
         pen = QtGui.QPen()
         pen.setStyle(QtCore.Qt.SolidLine)
         pen.setWidth(60)
         pen.setBrush(QtCore.Qt.black)
         self.painter.setPen(pen)
-        width = self.ui.container.width()
-        height = self.ui.container.height()
-        radius = min(int(height * 0.45), int(width * 0.45))
-        center = QtCore.QPoint(width//2, height//2)
         self.painter.drawEllipse(center, radius, radius)
         pen.setStyle(QtCore.Qt.SolidLine)
         pen.setWidth(5)
         pen.setBrush(QtCore.Qt.white)
         self.painter.setPen(pen)
-        self.painter.drawEllipse(center, min(int(height * 0.42), int(width * 0.42)), min(int(height * 0.42), int(width * 0.42)))
-        self.painter.drawEllipse(center, min(int(height * 0.48), int(width * 0.48)), min(int(height * 0.48), int(width * 0.48)))
+        self.painter.drawEllipse(center, min(int(height * 0.42), int(width * 0.42)),
+                                 min(int(height * 0.42), int(width * 0.42)))
+        self.painter.drawEllipse(center, min(int(height * 0.48), int(width * 0.48)),
+                                 min(int(height * 0.48), int(width * 0.48)))
 
-        # Draw vehicules
-
-        for veh in self.road.vehicles:
-            self.painter.setPen(QtCore.Qt.green)
-            d_thetha = 2*np.pi/self.road_length
-            # self.painter.drawRect(veh.y * 10, 150, 10 * veh.length, 10)  # Dimensions of the rect are to be changed but it works
-            x_circle = radius*np.cos(d_thetha*veh.y)
-            y_circle = radius*np.sin(d_thetha*veh.y)
-            rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
-            veh_rect = QtCore.QRect(0, 0, veh.length, veh.length)
-            veh_rect.moveCenter(rect_center)
-            # self.painter.drawRect(int(center.x() + x_circle), int(center.y() + y_circle), veh.length, veh.length)
-            self.painter.drawRect(veh_rect)
-        # print("DESSINS DES VOITURES 2ème edition")
-        # self.painter.setPen(QtCore.Qt.green)
-        # print("DESSIN DES VOITURES 3ème edition")
-        # self.painter.drawRect(380,150,50,50)      # au milieu juste pour essayer l'affichage
-        # print("DESSIN DES VOITURES END")
-
-        self.painter.end()
-        print(self.road.get_mean_speed(0, 0))
-
+    def switch_display(self):
+        self.disp_img = self.ui.disp_img.value()
+        self.ui.container.update()
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

@@ -99,7 +99,7 @@ class Road(np.ndarray):
             if randint(1, 11) >= 3:
                 self[0, y] = Car(0, y, self, 1)
             else:
-                self[0, y] = Truck(0, y, self, randint(2, 5))
+                self[0, y] = Truck(0, y, self, 3)
             self.vehicles.append(self[0, y])
             print("Placing vehicle at coord {0}".format((0, y)))
             y += target_gap + 1
@@ -108,7 +108,7 @@ class Road(np.ndarray):
 
     def place_vehicles_randomly(self):
         """
-        Shuffles the location of vehicles.
+        Shuffles the location of vehicles. Not used in the main program but can be used later for testing purpose
 
         :return: Nothing
         :author: Mipam Quici

@@ -1,7 +1,8 @@
 from __future__ import annotations
 import numpy as np
-from random import randint
 from abc import ABC, abstractmethod
+from random import randint
+from PyQt5 import QtGui, QtCore
 
 
 class Vehicle(ABC):
@@ -95,8 +96,15 @@ class Vehicle(ABC):
         """
         pass
 
-    @abstractmethod
     def __str__(self):
+        return str(self.id) * self.length
+
+    @abstractmethod
+    def draw_image(self, painter, d_theta, radius, center, z):
+        pass
+
+    @abstractmethod
+    def draw_rect(self, painter, d_theta, radius, center, z):
         pass
 
 ### NOT YET IMPLEMENTED - Classes that inherits from Vehicle with different parameters for the model ###
@@ -117,12 +125,42 @@ class Car(Vehicle):
         self.min_gap = 4.  # In meter
         self.react_time = 2.0  # In seconds
         self.type = 1
+        if randint(0, 1):
+            self.img = QtGui.QImage("car1.png")
+        else:
+            self.img = QtGui.QImage("car2.png")
 
-    def __str__(self):
-        return str(self.id) * self.length
+    def draw_image(self, painter, d_theta, radius, center, z):
+        z *= 1.5 # Zooming when using images
+        x_circle = radius * np.cos(d_theta * self.y)
+        y_circle = - radius * np.sin(d_theta * self.y)
+        rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
+        veh_rect = QtCore.QRect(- self.length / 2 * z, - self.length / 2 * z, self.length * 2 * z, self.length * z)
+        rot_angle_deg = (np.pi / 2 - d_theta * self.y) * 360 / (2 * np.pi)
+
+        painter.save()
+        painter.translate(rect_center)
+        painter.rotate(rot_angle_deg)
+        painter.drawImage(veh_rect, self.img)
+        painter.restore()
+
+    def draw_rect(self, painter, d_theta, radius, center, z):
+        x_circle = radius * np.cos(d_theta * self.y)
+        y_circle = - radius * np.sin(d_theta * self.y)
+        rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
+        veh_rect = QtCore.QRect(- self.length / 2 * z, - self.length / 2 * z, self.length * 2 * z, self.length * z)
+        rot_angle_deg = (np.pi / 2 - d_theta * self.y) * 360 / (2 * np.pi)
+
+        painter.save()
+        painter.translate(rect_center)
+        painter.rotate(rot_angle_deg)
+        painter.fillRect(veh_rect, QtGui.QColor(int(255 * (1 - self.speed / self.ref_speed)),
+                                                int(255 * (self.speed / self.ref_speed)), 0))
+        painter.restore()
 
 
 class Truck(Vehicle):
+    img = QtGui.QImage("truck1.png")
 
     def __init__(self, x, y, road, length):
         super().__init__(x, y, road, length)
@@ -138,5 +176,30 @@ class Truck(Vehicle):
         self.react_time = 2.0  # In seconds
         self.type = 2
 
-    def __str__(self):
-        return str(self.id) * self.length
+    def draw_image(self, painter, d_theta, radius, center, z):
+        x_circle = radius * np.cos(d_theta * self.y)
+        y_circle = - radius * np.sin(d_theta * self.y)
+        rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
+        veh_rect = QtCore.QRect(- self.length / 2 * z, - self.length / 2 * z, self.length * 2 * z, self.length * z)
+        rot_angle_deg = (np.pi / 2 - d_theta * self.y) * 360 / (2 * np.pi)
+
+        painter.save()
+        painter.translate(rect_center)
+        painter.rotate(rot_angle_deg)
+        painter.drawImage(veh_rect, self.img)
+        painter.restore()
+
+    def draw_rect(self, painter, d_theta, radius, center, z):
+        x_circle = radius * np.cos(d_theta * self.y)
+        y_circle = - radius * np.sin(d_theta * self.y)
+        rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
+        veh_rect = QtCore.QRect(- self.length / 2 * z, - self.length / 2 * z, self.length * 2 * z, self.length * z)
+        rot_angle_deg = (np.pi / 2 - d_theta * self.y) * 360 / (2 * np.pi)
+
+        painter.save()
+        painter.translate(rect_center)
+        painter.rotate(rot_angle_deg)
+        painter.fillRect(veh_rect, QtGui.QColor(int(255 * (1 - self.speed / self.ref_speed)),
+                                                int(255 * (self.speed / self.ref_speed)), 0))
+        painter.restore()
+
