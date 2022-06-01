@@ -8,7 +8,7 @@ from PyQt5 import QtGui, QtCore
 class Vehicle(ABC):
     id = 0
 
-    def __init__(self, x: int, y: int, road: 'Road', length: int = 1) -> None:
+    def __init__(self, x: int, y: int, road: 'Road', length: int) -> None:
         """
         Initiates the Vehicle class on the given road at given coordinates.
 
@@ -20,6 +20,8 @@ class Vehicle(ABC):
         """
 
         self.road = road
+        if self.road.width < x or x < 0 or y < 0 or y >= self.road.length:
+            raise ValueError("Vehicle coordinates out of bound")
         self.x = x              # Vertical position from 0 to width - 1
         self.y = y              # Horizontal position from 0 to length - 1
         self.id = Vehicle.id    # id of vehicle
@@ -112,7 +114,7 @@ class Vehicle(ABC):
 
 class Car(Vehicle):
 
-    def __init__(self, x, y, road, length):
+    def __init__(self, x, y, road, length=1):
         super().__init__(x, y, road, length)
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
@@ -162,7 +164,7 @@ class Car(Vehicle):
 class Truck(Vehicle):
     img = QtGui.QImage("truck1.png")
 
-    def __init__(self, x, y, road, length):
+    def __init__(self, x, y, road, length=3):
         super().__init__(x, y, road, length)
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
