@@ -1,3 +1,3 @@
-To lauch the simulator, simply lauch simulation.py
+To lauch the simulator, simply lauch main_ihm.py
 
-To see the doc, lauch Doc_index.html
+To see the doc, go in "docs > _build > html" and lauch index.html

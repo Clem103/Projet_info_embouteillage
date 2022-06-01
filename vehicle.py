@@ -68,7 +68,7 @@ class Vehicle(ABC):
 
         return new_accel
 
-    def get_gap(self, leader):
+    def get_gap(self, leader: Vehicle) -> int:
         """
         Calculates the gap between two vehicles assuming the given vehicle is ahead and return the absolute value of it.
 
@@ -84,13 +84,13 @@ class Vehicle(ABC):
             # ahead (infinite road)
 
         if gap == 0:
-            gap = 0.0001
+            raise ValueError("The gap between Vehicles can't be equal to 0")
 
         return gap
 
     def change_lane(self, dest_lane):
         """
-        NOT YET IMPLEMENTED - Changes the lane of the vehicle to the dest_lane.
+        NOT IMPLEMENTED - Changes the lane of the vehicle to the dest_lane.
 
         :param dest_lane: Lane that the driver wants to reach
         :return: Nothing
@@ -98,23 +98,58 @@ class Vehicle(ABC):
         """
         pass
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """
+        Overrides __str__ methods for objects
+
+        :return: Id of the vehicle repeated *length* times as a string
+        :author: Clément Vellu
+        """
         return str(self.id) * self.length
 
     @abstractmethod
-    def draw_image(self, painter, d_theta, radius, center, z):
+    def draw_image(self, painter: QtGui.QPainter, d_theta: float, radius: int, center: QtCore.QPoint, z: float):
+        """
+        Abstract method, cannot be called.
+
+        :param painter: Container painter
+        :param d_theta: Increment in angle for a gap of one unit in the road array
+        :param radius: Radius of the circular road
+        :param center: Point that represents the center of the circular road
+        :param z: Zooming factor scaling according to the road length
+        :return: Nothing
+        :author: Clément Vellu
+        """
         pass
 
     @abstractmethod
-    def draw_rect(self, painter, d_theta, radius, center, z):
-        pass
+    def draw_rect(self, painter: QtGui.QPainter, d_theta: float, radius: int, center: QtCore.QPoint, z: float):
+        """
+        Abstract method, cannot be called.
 
-### NOT YET IMPLEMENTED - Classes that inherits from Vehicle with different parameters for the model ###
+        :param painter: Container painter
+        :param d_theta: Increment in angle for a gap of one unit in the road array
+        :param radius: Radius of the circular road
+        :param center: Point that represents the center of the circular road
+        :param z: Zooming factor scaling according to the road length
+        :return: Nothing
+        :author: Clément Vellu
+        """
+        pass
 
 
 class Car(Vehicle):
 
     def __init__(self, x, y, road, length=1):
+        """
+        Initiates the Car class on the given road at given coordinates.
+
+        :param x: Vertical position of the vehicle
+        :param y: Horizontal position of the vehicle
+        :param road: Road object where the vehicle is located
+        :param length: Length of the vehicle
+        :author: Clément Vellu
+        """
         super().__init__(x, y, road, length)
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
@@ -128,11 +163,22 @@ class Car(Vehicle):
         self.react_time = 2.0  # In seconds
         self.type = 1
         if randint(0, 1):
-            self.img = QtGui.QImage("car1.png")
+            self.img = QtGui.QImage("imgs/car1.png")
         else:
-            self.img = QtGui.QImage("car2.png")
+            self.img = QtGui.QImage("imgs/car2.png")
 
-    def draw_image(self, painter, d_theta, radius, center, z):
+    def draw_image(self, painter: QtGui.QPainter, d_theta: float, radius: int, center: QtCore.QPoint, z: float):
+        """
+        Draws the image linked to the Car object on the road at its location.
+
+        :param painter: Container painter
+        :param d_theta: Increment in angle for a gap of one unit in the road array
+        :param radius: Radius of the circular road
+        :param center: Point that represents the center of the circular road
+        :param z: Zooming factor scaling according to the road length
+        :return: Nothing
+        :author: Clément Vellu
+        """
         z *= 1.5 # Zooming when using images
         x_circle = radius * np.cos(d_theta * self.y)
         y_circle = - radius * np.sin(d_theta * self.y)
@@ -146,7 +192,18 @@ class Car(Vehicle):
         painter.drawImage(veh_rect, self.img)
         painter.restore()
 
-    def draw_rect(self, painter, d_theta, radius, center, z):
+    def draw_rect(self, painter: QtGui.QPainter, d_theta: float, radius: int, center: QtCore.QPoint, z: float):
+        """
+        Draws a rectangle at the position of the Car object on the road. The faster the Car goes, the greener the rectangle is.
+
+        :param painter: Container painter
+        :param d_theta: Increment in angle for a gap of one unit in the road array
+        :param radius: Radius of the circular road
+        :param center: Point that represents the center of the circular road
+        :param z: Zooming factor scaling according to the road length
+        :return: Nothing
+        :author: Clément Vellu
+        """
         x_circle = radius * np.cos(d_theta * self.y)
         y_circle = - radius * np.sin(d_theta * self.y)
         rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
@@ -162,9 +219,18 @@ class Car(Vehicle):
 
 
 class Truck(Vehicle):
-    img = QtGui.QImage("truck1.png")
+    img = QtGui.QImage("imgs/truck1.png")
 
     def __init__(self, x, y, road, length=3):
+        """
+        Initiates the Truck class on the given road at given coordinates.
+
+        :param x: Vertical position of the vehicle
+        :param y: Horizontal position of the vehicle
+        :param road: Road object where the vehicle is located
+        :param length: Length of the vehicle
+        :author: Clément Vellu
+        """
         super().__init__(x, y, road, length)
 
         self.length = length  # Length of the vehicle, default is 1 slot in the array
@@ -178,7 +244,18 @@ class Truck(Vehicle):
         self.react_time = 2.0  # In seconds
         self.type = 2
 
-    def draw_image(self, painter, d_theta, radius, center, z):
+    def draw_image(self, painter: QtGui.QPainter, d_theta: float, radius: int, center: QtCore.QPoint, z: float):
+        """
+        Draws the image linked to the Car object on the road at its location.
+
+        :param painter: Container painter
+        :param d_theta: Increment in angle for a gap of one unit in the road array
+        :param radius: Radius of the circular road
+        :param center: Point that represents the center of the circular road
+        :param z: Zooming factor scaling according to the road length
+        :return: Nothing
+        :author: Clément Vellu
+        """
         x_circle = radius * np.cos(d_theta * self.y)
         y_circle = - radius * np.sin(d_theta * self.y)
         rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)
@@ -191,7 +268,18 @@ class Truck(Vehicle):
         painter.drawImage(veh_rect, self.img)
         painter.restore()
 
-    def draw_rect(self, painter, d_theta, radius, center, z):
+    def draw_rect(self, painter: QtGui.QPainter, d_theta: float, radius: int, center: QtCore.QPoint, z: float):
+        """
+        Draws a rectangle at the position of the Truck object on the road. The faster the Car goes, the greener the rectangle is.
+
+        :param painter: Container painter
+        :param d_theta: Increment in angle for a gap of one unit in the road array
+        :param radius: Radius of the circular road
+        :param center: Point that represents the center of the circular road
+        :param z: Zooming factor scaling according to the road length
+        :return: Nothing
+        :author: Clément Vellu
+        """
         x_circle = radius * np.cos(d_theta * self.y)
         y_circle = - radius * np.sin(d_theta * self.y)
         rect_center = QtCore.QPoint(center.x() + x_circle, center.y() + y_circle)

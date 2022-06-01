@@ -85,7 +85,7 @@ class Road(np.ndarray):
 
         return r
 
-    def place_vehicles_1d(self):
+    def place_vehicles_1d(self) -> None:
         """
         Called upon initialization of the simulation to instantiate the vehicles and to place them as spread as possible
         using the simulation parameters (length of the road and number of vehicles).
@@ -96,7 +96,7 @@ class Road(np.ndarray):
         target_gap = self.length // self.nbvehic - 1
         y = 0
         for i in range(self.nbvehic):
-            if randint(1, 11) >= 3:
+            if randint(1, 10) > 3:
                 self[0, y] = Car(0, y, self, 1)
             else:
                 self[0, y] = Truck(0, y, self, 3)
@@ -106,9 +106,9 @@ class Road(np.ndarray):
 
         print(self)
 
-    def place_vehicles_randomly(self):
+    def place_vehicles_randomly(self) -> None:
         """
-        Shuffles the location of vehicles. Not used in the main program but can be used later for testing purpose
+        Shuffles the location of vehicles. Not used in the main program but can be used later for testing purpose.
 
         :return: Nothing
         :author: Mipam Quici
@@ -125,9 +125,9 @@ class Road(np.ndarray):
             veh.x = x
             veh.y = y
 
-            print(self)
+        print(self)
 
-    def update_pos(self):
+    def update_pos(self) -> None:
         """
         Updates the position of the vehicles on the road and brings the vehicles that reach the end of the road to
         the beginning of it. \n
@@ -142,7 +142,15 @@ class Road(np.ndarray):
             y = veh.y % self.length
             self[0, y] = veh
 
-    def get_mean_speed(self, counter, sum):
+    def get_mean_speed(self, counter: int, sum: float) -> float:
+        """
+        Recursively calculates the mean speed of the vehicles.
+
+        :param counter: Number of vehicles already taken into account
+        :param sum: Total speed
+        :return: mean_value : Mean speed of the vehicles
+        :author: Clément Vellu
+        """
         if counter == self.nbvehic:
             return sum/self.nbvehic
         else:
@@ -151,4 +159,4 @@ class Road(np.ndarray):
 
 if __name__ == "__main__":
     # For testing purpose
-    a = Road(100, 1, 2)  # Kept at 1 lane for the moment and 1000 cell long (scale for 4km simulation)
+    a = Road(100, 1, 2)

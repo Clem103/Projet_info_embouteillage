@@ -8,6 +8,11 @@ from simulation import step
 
 class MonAppli(QtWidgets.QMainWindow):
     def __init__(self):
+        """
+        Initiates the UI with a new Road.
+        :return: Nothing
+        :author: Clément Vellu
+        """
         super().__init__()
 
         # Setting up the UI
@@ -22,17 +27,17 @@ class MonAppli(QtWidgets.QMainWindow):
 
         # Connecting the buttons to functions
 
-        self.ui.bouton_simu.clicked.connect(self.simuler)
+        self.ui.bouton_simu.clicked.connect(self.simulate)
         self.ui.bouton_pause.clicked.connect(self.pause)
         self.ui.slider_vitesse.valueChanged.connect(self.set_sim_speed)
-        self.ui.bouton_gen.clicked.connect(self.generer)
+        self.ui.bouton_gen.clicked.connect(self.generate_sim)
         self.ui.spinbox_nb_vehicle.valueChanged.connect(self.set_nb_vehicle)
         self.ui.spinbox_longueur_route.valueChanged.connect(self.set_road_length)
         self.ui.disp_img.valueChanged.connect(self.switch_display)
 
         # Setting up background
 
-        fond = QtGui.QPixmap("fond.jpg").scaled(self.ui.container.width(), self.ui.container.height(), QtCore.Qt.KeepAspectRatio)
+        fond = QtGui.QPixmap("imgs/fond.jpg").scaled(self.ui.container.width(), self.ui.container.height(), QtCore.Qt.KeepAspectRatio)
         pal = QtGui.QPalette()
         pal.setBrush(QtGui.QPalette.Background, QtGui.QBrush(fond))
         self.ui.container.lower()
@@ -52,45 +57,94 @@ class MonAppli(QtWidgets.QMainWindow):
         self.sim_speed = 1
         self.disp_img = 1
 
-        self.generer()
+        self.generate_sim()
 
-    def simuler(self):
+    def simulate(self):
+        """
+        Sets the speed of the simulation.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         print("Starting / Resetting the simulation")
         if self.timer.isActive():
             self.timer.stop()
         self.timer.start(round(30/self.sim_speed))   # 0.5 is the default time step (simulation running at 100%)
 
     def one_step(self):
+        """
+        Performs a step of the simulation. Uses step function from simulation script. Updates the display
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         # Time increment for simulation is always 0.5
         # Otherwise, the physical model doesn't work properly
         step(self.road, time_increment=0.5)
         self.ui.container.update()
-        # print(self.road) for debugging purpose
 
     def pause(self):
+        """
+        Pauses the simulation.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         print("Pausing the simulation")
         self.timer.stop()
 
     def set_sim_speed(self):
+        """
+        Called upon simulation speed slider change. Changes the simulation speed.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         print("Changed simulation speed")
         self.sim_speed = self.ui.LCD_vitesse.value() / 100
         if self.timer.isActive():
-            self.simuler()
+            self.simulate()
 
     def set_nb_vehicle(self):
+        """
+        Sets the number of Vehicles on the Road.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         self.nb_vehicle = self.ui.spinbox_nb_vehicle.value()
+        self.generate_sim()
         print("Changed number of vehicles")
 
     def set_road_length(self):
+        """
+        Sets the road length.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         self.road_length = self.ui.spinbox_longueur_route.value()
+        self.generate_sim()
         print("Changed road length value")
 
-    def generer(self):
+    def generate_sim(self):
+        """
+        Generates a Road and updates the display.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         print("Setting up simulation")
         self.road = road.Road(self.road_length, self.road_width, self.nb_vehicle)
         self.ui.container.update()
 
-    def update_screen(self, *args):  # This function needs to have *args as arguments
+    def update_screen(self, *args):
+        """
+        Updates the container display and the LCDs.
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
 
         # Update mean speed LCD display
 
@@ -104,13 +158,14 @@ class MonAppli(QtWidgets.QMainWindow):
         height = self.ui.container.height()
         radius = min(int(height * 0.45), int(width * 0.45))
         center = QtCore.QPoint(width // 2, height // 2)
+
         self.draw_road(width, height, radius, center)
 
         # Draw vehicles
+        z = 2000 / self.road_length  # Zooming factor
         for veh in self.road.vehicles:
 
             d_theta = 2*np.pi/self.road_length
-            z = 2000/self.road_length # Zooming factor
 
             if not self.disp_img:
                 veh.draw_rect(self.painter, d_theta, radius, center, z)
@@ -119,7 +174,17 @@ class MonAppli(QtWidgets.QMainWindow):
 
         self.painter.end()
 
-    def draw_road(self, width, height, radius, center):
+    def draw_road(self, width: int, height: int, radius: int, center: QtCore.QPoint):
+        """
+        Draws the road on the display.
+
+        :param width: Width of the container
+        :param height: Height of the container
+        :param radius: Radius of the road
+        :param center: Center of the circular road
+        :return: Nothing
+        :author: Clément Vellu
+        """
 
         pen = QtGui.QPen()
         pen.setStyle(QtCore.Qt.SolidLine)
@@ -137,6 +202,12 @@ class MonAppli(QtWidgets.QMainWindow):
                                  min(int(height * 0.48), int(width * 0.48)))
 
     def switch_display(self):
+        """
+        Called upon switch on the display mode slider. Updates the type of display for the Vehicles
+
+        :return: Nothing
+        :author: Clément Vellu
+        """
         self.disp_img = self.ui.disp_img.value()
         self.ui.container.update()
 

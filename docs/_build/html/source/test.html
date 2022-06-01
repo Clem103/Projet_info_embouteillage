@@ -1,10 +1,10 @@
 
 <!DOCTYPE html>
 
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
     <title>test module &#8212; Traffic simulator  documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
@@ -12,6 +12,7 @@
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
     <script src="../_static/doctools.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -32,58 +33,103 @@
           <div class="body" role="main">
             
   <section id="module-test">
-<span id="test-module"></span><h1>test module<a class="headerlink" href="#module-test" title="Permalink to this headline">¶</a></h1>
+<span id="test-module"></span><h1>test module<a class="headerlink" href="#module-test" title="Permalink to this heading">¶</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="test.Test">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">test.</span></span><span class="sig-name descname"><span class="pre">Test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.Test" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">unittest.case.TestCase</span></code></p>
+<dt class="sig sig-object py" id="test.Test_road">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">test.</span></span><span class="sig-name descname"><span class="pre">Test_road</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_road" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
 <dl class="py method">
-<dt class="sig sig-object py" id="test.Test.test_Init_Except_Road">
-<span class="sig-name descname"><span class="pre">test_Init_Except_Road</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test.test_Init_Except_Road" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="test.Test_road.test_Init_Except_Road">
+<span class="sig-name descname"><span class="pre">test_Init_Except_Road</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_road.test_Init_Except_Road" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks that Exception are correctly handled when creating a Road with valid and invalid parameters.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Nothing</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Exception</strong> – If the Exception caused by invalid or valid values are not correctly raised</p>
 </dd>
-<dt class="field-odd">Author</dt>
+<dt class="field-odd">Author<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Mipam Quici</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="test.Test.test_Init_Road">
-<span class="sig-name descname"><span class="pre">test_Init_Road</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test.test_Init_Road" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="test.Test_road.test_Init_Road">
+<span class="sig-name descname"><span class="pre">test_Init_Road</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_road.test_Init_Road" title="Permalink to this definition">¶</a></dt>
 <dd><p>Checks that the value given to the constructor are correctly set as instance variables.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Nothing</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Exception</strong> – If the values given to the constructor are not set properly as instance variables or do not have matching values</p>
 </dd>
-<dt class="field-odd">Author</dt>
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Mipam Quici</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="test.Test_vehicles">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">test.</span></span><span class="sig-name descname"><span class="pre">Test_vehicles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">methodName</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'runTest'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_vehicles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TestCase</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="test.Test_vehicles.road">
+<span class="sig-name descname"><span class="pre">road</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">Road([[&lt;vehicle.Truck</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Truck</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Truck</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">&lt;vehicle.Car</span> <span class="pre">object&gt;,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0],</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0],</span>&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">[0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0,</span> <span class="pre">0]],</span> <span class="pre">dtype=object)</span></em><a class="headerlink" href="#test.Test_vehicles.road" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test.Test_vehicles.test_Id_Not_Equals">
+<span class="sig-name descname"><span class="pre">test_Id_Not_Equals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_vehicles.test_Id_Not_Equals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that two instanced Vehicles don’t have the same id. Also checks that an instanced Road doesn’t have vehicles with same ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nothing</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If there are two vehicles with matching ids.</p>
+</dd>
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Clément Vellu</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="test.Test_vehicles.test_Init_Car">
+<span class="sig-name descname"><span class="pre">test_Init_Car</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_vehicles.test_Init_Car" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the value given to the Car constructor are correctly set as instance variables and if out of bound values are correctly handled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Nothing</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – If the values given to the constructor are not set properly as instance variables or do not have matching values</p>
+</dd>
+<dt class="field-odd">Author<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Mipam Quici</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="test.Test.test_Init_Vehicle">
-<span class="sig-name descname"><span class="pre">test_Init_Vehicle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test.test_Init_Vehicle" title="Permalink to this definition">¶</a></dt>
-<dd><p>Checks that the value given to the constructor are correctly set as instance variables.</p>
+<dt class="sig sig-object py" id="test.Test_vehicles.test_Init_Truck">
+<span class="sig-name descname"><span class="pre">test_Init_Truck</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#test.Test_vehicles.test_Init_Truck" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks that the value given to the Truck constructor are correctly set as instance variables and if out of bound values are correctly handled.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Nothing</p>
 </dd>
-<dt class="field-even">Raises</dt>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><p><strong>Exception</strong> – If the values given to the constructor are not set properly as instance variables or do not have matching values</p>
 </dd>
-<dt class="field-odd">Author</dt>
-<dd class="field-odd"><p>Mipam Quici</p>
+<dt class="field-odd">Author<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Clément Vellu</p>
 </dd>
 </dl>
 </dd></dl>
@@ -126,7 +172,7 @@
     </form>
     </div>
 </div>
-<script>$('#searchbox').show(0);</script>
+<script>document.getElementById('searchbox').style.display = "block"</script>
 
 
 
@@ -143,7 +189,7 @@
       &copy;2022, Clément Vellu, Mipam Quici.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.4.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 5.0.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
